@@ -1,0 +1,1074 @@
+/* ==========================================================================
+   ICE Tasks 2 & 3 - Profile Page Stylesheet (desktop + responsive)
+   Student: Theolin Chetty (ST10507916)
+   Module:  WEDE5020
+
+   Contents
+   1.  Colour and spacing variables
+   2.  Base / reset styles
+   3.  Layout helpers (container, sections)
+   4.  Navigation menu (Flexbox)
+   5.  Page header and profile photograph (Flexbox)
+   6.  Buttons
+   7.  Cards and grids (CSS Grid)
+   8.  About section
+   9.  Education, Experience and Skills lists
+   10. Technologies tag list (Flexbox wrap)
+   11. Contact section and form (CSS Grid)
+   12. Footer
+   13. Responsive design (media queries, ICE Task 3)
+       13.1  Small laptops      (max-width: 1100px)
+       13.2  Tablets            (max-width: 900px)
+       13.3  Mobile phones      (max-width: 600px)
+       13.4  Very small phones  (max-width: 360px)
+   ========================================================================== */
+
+
+/* 1. Colour and spacing variables
+   -------------------------------------------------------------------------- */
+:root {
+  --color-dark: #1e293b;        /* header, footer, headings */
+  --color-dark-soft: #334155;   /* hover state for dark items */
+  --color-accent: #0f766e;      /* buttons, links, highlights */
+  --color-accent-dark: #115e59; /* accent hover */
+  --color-accent-light: #ccfbf1;/* tags, badges */
+  --color-text: #1f2937;        /* body text */
+  --color-muted: #64748b;       /* meta text */
+  --color-bg: #f8fafc;          /* page background */
+  --color-bg-alt: #eef2f6;      /* alternate section background */
+  --color-white: #ffffff;
+  --color-border: #dbe2ea;
+  --color-error: #b91c1c;
+
+  --font-main: "Segoe UI", Roboto, Arial, Helvetica, sans-serif;
+  --font-heading: Georgia, "Times New Roman", serif;
+
+  --radius: 10px;
+  --shadow: 0 4px 14px rgba(15, 23, 42, 0.08);
+  --shadow-hover: 0 10px 24px rgba(15, 23, 42, 0.14);
+  --header-height: 72px;
+}
+
+
+/* 2. Base / reset styles
+   -------------------------------------------------------------------------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth; /* smooth scrolling when a nav anchor is clicked */
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-main);
+  font-size: 17px;
+  line-height: 1.7;
+  color: var(--color-text);
+  background-color: var(--color-bg);
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-heading);
+  color: var(--color-dark);
+  line-height: 1.25;
+  margin-top: 0;
+}
+
+h3 {
+  font-size: 1.25rem;
+  margin-bottom: 6px;
+}
+
+p {
+  margin: 0 0 16px 0;
+}
+
+a {
+  color: var(--color-accent);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+a:hover {
+  color: var(--color-accent-dark);
+  text-decoration: underline;
+}
+
+/* Clear keyboard focus outline for links, buttons and form fields */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible {
+  outline: 3px solid #f59e0b;
+  outline-offset: 2px;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+
+/* 3. Layout helpers
+   -------------------------------------------------------------------------- */
+.container {
+  width: 1100px;
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 0 32px;
+}
+
+.section {
+  padding: 80px 0;
+  /* stops the sticky header from covering section headings after an anchor jump */
+  scroll-margin-top: var(--header-height);
+}
+
+.section-alt {
+  background-color: var(--color-bg-alt);
+}
+
+.section-title {
+  font-size: 2.1rem;
+  margin-bottom: 36px;
+  position: relative;
+  padding-bottom: 14px;
+}
+
+/* Decorative accent bar underneath every section title */
+.section-title::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 64px;
+  height: 4px;
+  border-radius: 2px;
+  background-color: var(--color-accent);
+}
+
+.section-intro {
+  margin-top: -16px;
+  margin-bottom: 32px;
+  color: var(--color-muted);
+  font-size: 1.05rem;
+}
+
+
+/* 4. Navigation menu (Flexbox)
+   -------------------------------------------------------------------------- */
+#main-nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background-color: var(--color-dark);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.nav-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: var(--header-height);
+}
+
+.brand {
+  font-family: var(--font-heading);
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: var(--color-white);
+  letter-spacing: 0.5px;
+}
+
+.brand span {
+  color: #5eead4; /* lighter teal so it stays readable on the dark header */
+}
+
+.brand:hover {
+  color: var(--color-white);
+  text-decoration: none;
+}
+
+.nav-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.nav-list a {
+  display: block;
+  padding: 8px 14px;
+  border-radius: 6px;
+  color: #e2e8f0;
+  font-size: 0.95rem;
+  font-weight: 600;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.nav-list a:hover {
+  background-color: var(--color-dark-soft);
+  color: var(--color-white);
+  text-decoration: none;
+}
+
+/* "Contact" link styled as a call-to-action button */
+.nav-list .nav-cta {
+  background-color: var(--color-accent);
+  color: var(--color-white);
+  margin-left: 8px;
+}
+
+.nav-list .nav-cta:hover {
+  background-color: var(--color-accent-dark);
+}
+
+
+/* 5. Page header / profile introduction (Flexbox)
+   -------------------------------------------------------------------------- */
+#home {
+  padding: 90px 0;
+  background: linear-gradient(135deg, #1e293b 0%, #134e4a 100%);
+  color: #e2e8f0;
+  scroll-margin-top: var(--header-height);
+}
+
+.hero-inner {
+  display: flex;
+  align-items: center;
+  gap: 60px;
+}
+
+/* ID selector: the profile photograph is a unique element on the page */
+#profile-photo {
+  width: 240px;
+  height: 240px;
+  flex-shrink: 0;
+  margin: 0 10px 0 0;
+  padding: 6px;                         /* gap between the photo and its border */
+  background-color: var(--color-white); /* fills the padding to create a white ring */
+  border: 4px solid #5eead4;
+  border-radius: 50%;
+  object-fit: cover;                    /* keeps the photo in proportion, no stretching */
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+}
+
+.eyebrow {
+  margin: 0 0 4px 0;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #5eead4;
+}
+
+#home h1 {
+  font-size: 3.4rem;
+  color: var(--color-white);
+  margin-bottom: 8px;
+}
+
+.hero-role {
+  font-size: 1.25rem;
+  color: #cbd5e1;
+}
+
+.hero-role strong {
+  color: var(--color-white);
+}
+
+.hero-summary {
+  max-width: 560px;
+  color: #cbd5e1;
+  margin-bottom: 28px;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 14px;
+}
+
+/* Outline button needs light colours when it sits on the dark header */
+#home .btn-outline {
+  color: var(--color-white);
+  border-color: rgba(255, 255, 255, 0.7);
+}
+
+#home .btn-outline:hover {
+  background-color: var(--color-white);
+  color: var(--color-dark);
+}
+
+
+/* 6. Buttons
+   -------------------------------------------------------------------------- */
+.btn {
+  display: inline-block;
+  padding: 12px 26px;
+  border: 2px solid transparent;
+  border-radius: 8px;
+  font-family: var(--font-main);
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  text-align: center;
+  transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+}
+
+.btn:hover {
+  text-decoration: none;
+  transform: translateY(-2px);
+}
+
+.btn-primary {
+  background-color: var(--color-accent);
+  color: var(--color-white);
+}
+
+.btn-primary:hover {
+  background-color: var(--color-accent-dark);
+  color: var(--color-white);
+}
+
+.btn-outline {
+  background-color: transparent;
+  color: var(--color-dark);
+  border-color: var(--color-dark);
+}
+
+.btn-outline:hover {
+  background-color: var(--color-dark);
+  color: var(--color-white);
+}
+
+
+/* 7. Cards and grids (CSS Grid)
+   -------------------------------------------------------------------------- */
+.card {
+  background-color: var(--color-white);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  padding: 30px;
+  box-shadow: var(--shadow);
+  transition: box-shadow 0.25s ease, transform 0.25s ease;
+}
+
+.card:hover {
+  box-shadow: var(--shadow-hover);
+  transform: translateY(-3px);
+}
+
+/* Two equal columns used by Education and Skills */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 30px;
+}
+
+.meta {
+  font-style: italic;
+  color: var(--color-muted);
+  font-size: 0.95rem;
+  margin-bottom: 14px;
+}
+
+.badge {
+  display: inline-block;
+  margin-left: 6px;
+  padding: 2px 10px;
+  border-radius: 999px;
+  background-color: var(--color-accent-light);
+  color: var(--color-accent-dark);
+  font-style: normal;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  vertical-align: middle;
+}
+
+
+/* 8. About section
+   -------------------------------------------------------------------------- */
+.about-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 40px;
+  align-items: start;
+}
+
+.about-text {
+  font-size: 1.1rem;
+  margin: 0;
+}
+
+.facts-card {
+  border-top: 5px solid var(--color-accent);
+}
+
+/* Definition list laid out as label / value pairs with CSS Grid */
+.facts {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 10px 16px;
+  margin: 16px 0 0 0;
+}
+
+.facts dt {
+  font-weight: 700;
+  color: var(--color-dark);
+}
+
+.facts dd {
+  margin: 0;
+  color: var(--color-muted);
+}
+
+
+/* 9. Education, Experience and Skills lists
+   -------------------------------------------------------------------------- */
+
+/* Custom tick marks instead of default bullets */
+.check-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.check-list li {
+  position: relative;
+  padding: 6px 0 6px 30px;
+  border-bottom: 1px dashed var(--color-border);
+}
+
+.check-list li:last-child {
+  border-bottom: none;
+}
+
+.check-list li::before {
+  content: "\2713"; /* tick symbol */
+  position: absolute;
+  left: 4px;
+  top: 6px;
+  color: var(--color-accent);
+  font-weight: bold;
+}
+
+/* Numbered list with round number badges */
+.number-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  counter-reset: strengths;
+}
+
+.number-list li {
+  counter-increment: strengths;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 7px 0;
+  border-bottom: 1px dashed var(--color-border);
+}
+
+.number-list li:last-child {
+  border-bottom: none;
+}
+
+.number-list li::before {
+  content: counter(strengths);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 30px;
+  height: 30px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background-color: var(--color-dark);
+  color: var(--color-white);
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+/* Experience timeline: a vertical line with a dot next to each job */
+.timeline {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  padding-left: 40px;
+}
+
+.timeline::before {
+  content: "";
+  position: absolute;
+  left: 11px;
+  top: 8px;
+  bottom: 8px;
+  width: 3px;
+  background-color: var(--color-border);
+}
+
+.timeline-item {
+  position: relative;
+}
+
+.timeline-item::before {
+  content: "";
+  position: absolute;
+  left: -37px;
+  top: 34px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background-color: var(--color-accent);
+  border: 4px solid var(--color-bg);
+  box-shadow: 0 0 0 2px var(--color-accent);
+}
+
+.timeline-item ul {
+  margin: 0;
+  padding-left: 20px;
+}
+
+.timeline-item li {
+  margin-bottom: 6px;
+}
+
+.timeline-item li::marker {
+  color: var(--color-accent);
+}
+
+
+/* 10. Technologies tag list (Flexbox wrap)
+   -------------------------------------------------------------------------- */
+.tag-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+
+.tag-list li {
+  padding: 10px 20px;
+  background-color: var(--color-white);
+  border: 2px solid var(--color-accent);
+  border-radius: 999px;
+  color: var(--color-accent-dark);
+  font-weight: 600;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.tag-list li:hover {
+  background-color: var(--color-accent);
+  color: var(--color-white);
+}
+
+
+/* 11. Contact section and form (CSS Grid)
+   -------------------------------------------------------------------------- */
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 30px;
+  align-items: start;
+}
+
+.contact-details {
+  background-color: var(--color-dark);
+  border-color: var(--color-dark);
+  color: #e2e8f0;
+}
+
+.contact-details h3 {
+  color: var(--color-white);
+}
+
+.contact-list {
+  list-style: none;
+  padding: 0;
+  margin: 20px 0 0 0;
+}
+
+.contact-list li {
+  padding: 14px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  word-break: break-word;
+}
+
+.contact-list li:last-child {
+  border-bottom: none;
+}
+
+.contact-label {
+  display: block;
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: #5eead4;
+}
+
+.contact-list a {
+  color: var(--color-white);
+}
+
+.contact-list a:hover {
+  color: #5eead4;
+}
+
+/* Hover lift is not wanted on the form, it would move while typing */
+#contact-form:hover,
+.contact-details:hover {
+  transform: none;
+}
+
+#contact-form fieldset {
+  border: none;
+  margin: 0;
+  padding: 0;
+}
+
+#contact-form legend {
+  font-family: var(--font-heading);
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: var(--color-dark);
+  margin-bottom: 20px;
+  padding: 0;
+}
+
+/* Two fields side by side */
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  font-weight: 600;
+  font-size: 0.95rem;
+  margin-bottom: 6px;
+  color: var(--color-dark);
+}
+
+.required {
+  color: var(--color-error);
+}
+
+#contact-form input[type="text"],
+#contact-form input[type="email"],
+#contact-form textarea {
+  width: 100%;
+  padding: 12px 14px;
+  font-family: var(--font-main);
+  font-size: 1rem;
+  color: var(--color-text);
+  background-color: var(--color-bg);
+  border: 2px solid var(--color-border);
+  border-radius: 8px;
+  transition: border-color 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+#contact-form textarea {
+  resize: vertical;
+  min-height: 140px;
+}
+
+#contact-form input::placeholder,
+#contact-form textarea::placeholder {
+  color: #94a3b8;
+}
+
+/* Highlight the field the user is typing in */
+#contact-form input:focus,
+#contact-form textarea:focus {
+  border-color: var(--color-accent);
+  background-color: var(--color-white);
+  box-shadow: 0 0 0 4px rgba(15, 118, 110, 0.15);
+  outline: none;
+}
+
+/* Red border once a filled-in field is invalid, e.g. a badly typed email */
+#contact-form input:not(:placeholder-shown):invalid {
+  border-color: var(--color-error);
+}
+
+.form-actions {
+  display: flex;
+  gap: 14px;
+}
+
+.field-hint {
+  margin: 6px 0 0 0;
+  font-size: 0.85rem;
+  color: var(--color-muted);
+}
+
+.form-note {
+  margin: 16px 0 0 0;
+  font-size: 0.85rem;
+  color: var(--color-muted);
+}
+
+
+/* 12. Footer
+   -------------------------------------------------------------------------- */
+footer {
+  background-color: var(--color-dark);
+  color: #cbd5e1;
+  padding: 30px 0;
+  font-size: 0.9rem;
+  text-align: center;
+  border-top: 4px solid var(--color-accent);
+}
+
+footer p {
+  margin: 0 0 4px 0;
+}
+
+footer a {
+  color: #5eead4;
+  font-weight: 600;
+}
+
+/* Extra space between a card heading and the list directly under it */
+.card > h3 + ul,
+.card > h3 + ol {
+  margin-top: 14px;
+}
+
+
+/* 13. Responsive design (ICE Task 3)
+   --------------------------------------------------------------------------
+   The desktop design above is the starting point. Each media query below
+   uses max-width, so its rules only apply when the browser window is that
+   width or narrower. The queries are ordered from widest to narrowest, so a
+   phone receives the tablet rules first and then the mobile rules on top.
+   Only layout, size and spacing change. Colours, borders, backgrounds and
+   decoration stay the same as the desktop design.
+   -------------------------------------------------------------------------- */
+
+
+/* 13.1 Small laptops and large tablets in landscape (1100px and below)
+   The seven navigation links start to crowd the name, so the gaps and
+   link padding are reduced slightly. */
+@media (max-width: 1100px) {
+  .container {
+    padding: 0 28px;
+  }
+
+  .nav-list {
+    gap: 2px;
+  }
+
+  .nav-list a {
+    padding: 8px 10px;
+  }
+
+  .hero-inner {
+    gap: 44px;
+  }
+}
+
+
+/* 13.2 Tablets (900px and below)
+   There is no longer room for the name and all links on one line, and the
+   two-column About and Contact layouts become cramped. */
+@media (max-width: 900px) {
+  :root {
+    --header-height: 112px; /* the nav is taller once it uses two rows */
+  }
+
+  body {
+    font-size: 16px;
+  }
+
+  /* Navigation: name on top, links centred underneath (flex-direction: column) */
+  .nav-inner {
+    flex-direction: column;
+    justify-content: center;
+    height: auto;            /* let the nav grow to fit two rows instead of a fixed 72px */
+    gap: 6px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+
+  .nav-list {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .nav-list a {
+    font-size: 0.9rem;
+  }
+
+  /* Smaller photo and heading so the header still fits side by side */
+  #home {
+    padding: 64px 0;
+  }
+
+  #profile-photo {
+    width: 190px;
+    height: 190px;
+  }
+
+  #home h1 {
+    font-size: 2.8rem;
+  }
+
+  .hero-role {
+    font-size: 1.1rem;
+  }
+
+  .section {
+    padding: 64px 0;
+  }
+
+  .section-title {
+    font-size: 1.85rem;
+    margin-bottom: 30px;
+  }
+
+  /* About: description and Quick Facts change from 2 columns to 1 */
+  .about-grid {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+
+  /* Education and Skills cards stay in 2 columns, with a smaller gap */
+  .card-grid {
+    gap: 22px;
+  }
+
+  .card {
+    padding: 26px;
+  }
+
+  /* Contact: details card and form change from 2 columns to 1 */
+  .contact-grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+}
+
+
+/* 13.3 Mobile phones (600px and below)
+   Everything is arranged in a single column, the sticky nav is released so
+   it does not cover a large part of a small screen, and sizes are reduced
+   while keeping text comfortable to read. */
+@media (max-width: 600px) {
+  .container {
+    padding: 0 18px;
+  }
+
+  /* Navigation: not sticky on phones, links arranged in a 3-column grid */
+  #main-nav {
+    position: static;
+  }
+
+  .nav-inner {
+    gap: 10px;
+    padding-top: 14px;
+    padding-bottom: 14px;
+  }
+
+  .brand {
+    font-size: 1.35rem;
+  }
+
+  .nav-list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 6px;
+    width: 100%;
+  }
+
+  .nav-list a {
+    padding: 10px 4px;           /* taller links are easier to tap */
+    text-align: center;
+    background-color: var(--color-dark-soft);
+  }
+
+  /* Contact button spans the full width of the grid */
+  .nav-list .nav-cta {
+    margin-left: 0;
+  }
+
+  .nav-list li:last-child {
+    grid-column: 1 / -1;
+  }
+
+  /* Without a sticky nav, sections only need a small scroll offset */
+  .section,
+  #home {
+    scroll-margin-top: 12px;
+  }
+
+  /* Header: photo above the text, everything centred (flex-direction: column) */
+  #home {
+    padding: 44px 0 48px 0;
+  }
+
+  .hero-inner {
+    flex-direction: column;
+    text-align: center;
+    gap: 24px;
+  }
+
+  #profile-photo {
+    width: 160px;
+    height: 160px;
+    margin: 0;
+    padding: 5px;
+  }
+
+  #home h1 {
+    font-size: 2.3rem;
+  }
+
+  .eyebrow {
+    font-size: 0.8rem;
+  }
+
+  .hero-role {
+    font-size: 1.05rem;
+  }
+
+  .hero-summary {
+    max-width: 100%;
+  }
+
+  /* Header buttons stacked and full width */
+  .hero-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .section {
+    padding: 48px 0;
+  }
+
+  .section-title {
+    font-size: 1.6rem;
+    margin-bottom: 24px;
+  }
+
+  .section-intro {
+    margin-top: -8px;
+    margin-bottom: 24px;
+    font-size: 1rem;
+  }
+
+  .about-text {
+    font-size: 1rem;
+  }
+
+  h3 {
+    font-size: 1.15rem;
+  }
+
+  /* Education and Skills cards: 2 columns become 1 */
+  .card-grid {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+
+  .card {
+    padding: 20px;
+  }
+
+  /* Experience timeline: thinner left margin so cards have more room */
+  .timeline {
+    padding-left: 26px;
+    gap: 20px;
+  }
+
+  .timeline::before {
+    left: 6px;
+  }
+
+  .timeline-item::before {
+    left: -29px;
+    top: 26px;
+    width: 14px;
+    height: 14px;
+    border-width: 3px;
+  }
+
+  /* Technology tags: smaller pills so more fit on each row */
+  .tag-list {
+    gap: 10px;
+  }
+
+  .tag-list li {
+    padding: 7px 14px;
+    font-size: 0.9rem;
+  }
+
+  /* Contact form: Name and Email change from side by side to stacked */
+  .form-row {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  #contact-form legend {
+    font-size: 1.3rem;
+  }
+
+  /* 16px text in fields stops phones from zooming in when a field is tapped */
+  #contact-form input[type="text"],
+  #contact-form input[type="email"],
+  #contact-form textarea {
+    font-size: 16px;
+  }
+
+  /* Form buttons stacked and full width so they are easy to tap */
+  .form-actions {
+    flex-direction: column;
+  }
+
+  .form-actions .btn {
+    width: 100%;
+  }
+
+  footer {
+    padding: 24px 0;
+    font-size: 0.85rem;
+  }
+}
+
+
+/* 13.4 Very small phones (360px and below)
+   The longest link ("Technologies") becomes too tight in 3 columns, so the
+   navigation grid changes to 2 columns and the main heading shrinks a little. */
+@media (max-width: 360px) {
+  .nav-list {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  #home h1 {
+    font-size: 2rem;
+  }
+
+  #profile-photo {
+    width: 140px;
+    height: 140px;
+  }
+}
